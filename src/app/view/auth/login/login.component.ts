@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   hide = true;
   loginForm: FormGroup;
   loggingIn: boolean;
+  emailerror: Array<String>;
   constructor(private fb: FormBuilder, private auth: AuthService, private loadingBar: LoadingBarService, private router: Router) { }
 
   ngOnInit(): void {
@@ -39,7 +40,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    
+
     this.loggingIn = true;
     this.loginForm.disable();
     this.loadingBar.start();
@@ -47,8 +48,8 @@ export class LoginComponent implements OnInit {
       this.loginForm.enable();
       this.loggingIn = false;
       this.loadingBar.stop();
-      this.auth.storeToken(user.token);
-      this.auth.storeUser(user.user);
+      this.auth.storeToken(user.accessToken);
+      this.auth.storeUser(user.Franchaise);
       this.router.navigate(['/']);
       console.log(user);
     }, (error: any) => {
@@ -65,6 +66,8 @@ export class LoginComponent implements OnInit {
           this.loginForm.setErrors({
             unAuthorized: error.error.message
           });
+        } else if (error.status == 422 ) {
+          this.emailerror = error.error.errors.email;
         }
       }
     });

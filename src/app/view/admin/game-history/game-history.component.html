@@ -1,0 +1,115 @@
+
+<div class="p-col-12 account__container">
+  <div class="pageheader">
+    <h1 class="pageheader__title text--capital">
+      Games History.
+    </h1>
+  </div>
+  <div class="p-grid">
+
+    <div class="p-col-2">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-6 form__item">
+          <label for="page_size" class="form__label text--capital"> Page Size </label>
+          <select name="cars" id="agent_type"  [(ngModel)]="page_size" (change)="changepagesize()"  class="form__select select">
+            <option value="10"> 10 </option>
+            <option value="200">200</option>
+            <option value="2000">2000</option>
+            <option value="10000">10000</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="p-col-10 ">
+      <div class="p-grid">
+        <div class="p-field p-col-3 form__item">
+          <label for="start_date" class="form__label text--capital"> Start date </label>
+          <p-calendar for="start_date" [(ngModel)]="start_date" (onSelect)="reloadtime()" class="date-select" showTime="true" hourFormat="24"></p-calendar>
+        </div>
+        <div class="p-field p-col-3 form__item">
+          <label for="end_date" class="form__label text--capital"> End date </label>
+          <p-calendar for="start_date" [(ngModel)]="end_date" (onSelect)="reloadtime()" class="date-select" showTime="true" hourFormat="24"></p-calendar>
+        </div>
+        <div class="p-field p-col-4 p-ml-auto form__item">
+          <div class="p-grid">
+            <div class="p-field p-col-6 p-ml-auto" style="margin-bottom: 0px;">
+              <label for="search_text" class="form__label text--capital"> Search text </label>
+              <input id="search_text" [(ngModel)]="search_text" (change)="search()" class="form__input form__input--lg" type="text" pInputText>
+            </div>
+            <div class="p-field p-col-6 p-ml-auto" style="margin-bottom: 0px;">
+              <label for="search_text" class="form__label text--capital"> Reload </label>
+              <button style="display: block; margin-top: 2px;" (change)="search()" class="button button--md text--capital button--success"> reload </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p-grid card">
+    <div class="p-col">
+      <div class="table__container">
+        <table class="table table__bordered">
+          <thead class="thead__dark">
+            <tr>
+              <th scope="col">S/No</th>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Phone number</th>
+              <th>Ticket id</th>
+              <th>Game type</th>
+              <th>Game status</th>
+              <th>Ticket price</th>
+              <th>Winning amount </th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="game_history && !game_history.length">
+              <tr>
+                <td colspan="8">
+                <p class="p-p-4 text--center text--capital">
+                  no bid history yet...
+                  </p>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="game_history && game_history.length">
+              <tr  *ngFor="let history of game_history; let i = index">
+                <td> {{ (i+1)  + from - 1}}</td>
+                <td> {{ history?.customer.firstname }} </td>
+                <td> {{ history?.customer.lastname }} </td>
+                <td> {{ history?.customer.phone_number }} </td>
+                <td> {{ history.ticket_id }}</td>
+                <td>
+                  <button *ngIf="history.type == 1" class="button button--sm text--capital button--danger"> Daily special </button>
+                  <button *ngIf="history.type == 2" class="button button--sm text--capital button--danger"> Quick play </button>
+                </td>
+                <td>
+                  <button *ngIf="history.status == 1" class="button button--sm text--capital button--success"> Won </button>
+                  <button *ngIf="history.status == 2" class="button button--sm text--capital button--danger"> Lost </button>
+                  <button *ngIf="history.status == 0" class="button button--sm text--capital button--primary"> Insession </button>
+                </td>
+                <td>
+                  {{ history?.stake | currency: '₦ ' }}
+                </td>
+                <td>
+                  {{ history?.winnings | currency: '₦ ' }}
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <div class="p-grid">
+          <div class="p-col-4 p-offset-8">
+            <div class="p-d-flex">
+              <button type="button" (click)="getdataurl(firstlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">First</button>
+              <button type="button" (click)="getdataurl(previewlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">Previous</button>
+              <button type="button" (click)="getdataurl(nextlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">Next</button>
+              <button type="button" (click)="getdataurl(lastlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">Last</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

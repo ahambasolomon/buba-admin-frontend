@@ -42,7 +42,7 @@ export class AuthService {
   }
 
   login(user) {
-    return this.http.post(`${environment.bubaApi}/admin/account/login`, user).pipe(catchError((error) => throwError(error)));
+    return this.http.post(`${environment.bubafranchaiseApi}/auth/franchaise/login`, user).pipe(catchError((error) => throwError(error)));
   }
 
  fetchDashboard() {

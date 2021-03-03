@@ -1,0 +1,100 @@
+<div class="p-col-12 account__container">
+  <div class="pageheader">
+    <h1 class="pageheader__title text--capital">
+      Agents List
+    </h1>
+  </div>
+  <div class="p-grid">
+
+    <div class="p-col-4">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-6 form__item">
+          <label for="search_text" class="form__label text--capital"> Search Text </label>
+          <input id="search_text" [(ngModel)]="search_text" (change)="search()"  class="form__input form__input--lg" type="text" pInputText>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-col-4 p-offset-4">
+      <div>
+        <div class="p-field p-col-6 p-offset-6 form__item">
+          <label for="page_size" class="form__label text--capital"> Page Size </label>
+          <select name="cars" id="agent_type" (change)="search()" [(ngModel)]="page_size" class="form__select select">
+            <option value="10"> 10 </option>
+            <option value="200">200</option>
+            <option value="2000">2000</option>
+            <option value="10000">10000</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- <div class="p-col-4 p-offset-4">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-6 form__item">
+          <label for="agent_type" class="form__label text--capital"> Agent Type </label>
+          <select name="cars" id="agent_type" formControlName="agent_type" class="form__select select">
+            <option value="A">Agent Type A</option>
+            <option value="B">Agent Type B</option>
+            <option value="C">Agent Type C</option>
+          </select>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <div class="p-grid card">
+    <div class="p-col">
+      <div class="table__container">
+        <table class="table table__bordered">
+          <thead class="thead__dark">
+            <tr>
+              <th scope="col">S/No</th>
+              <th>Action</th>
+              <th>Name</th>
+              <th>Telephone</th>
+              <th>Email</th>
+              <!-- <th>Balance</th> -->
+
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="agents_data && !agents_data.length">
+              <tr>
+                <td colspan="5">
+                <p class="p-p-4 text--center text--capital">
+                  no Agents yet
+                  </p>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="agents_data && agents_data.length">
+
+              <tr *ngFor="let user of agents_data; let i = index">
+
+                <td>{{(i+1)  + from - 1}}</td>
+                <td> <a routerLink="../viewagent/{{ user.id }}" class="button button--sm button--info text--upper p-mx-2"> View </a> </td>
+                <!-- <td>{{user.created_at | date}}</td> -->
+                <td>{{user.firstname | titlecase }} {{user.lastname | titlecase }}</td>
+                <td>{{user.phone_number}}</td>
+                <td>{{user.email}}</td>
+                <!-- <td>{{user.balance | currency:'₦'}}</td> -->
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <div class="p-grid">
+          <div class="p-col-4 p-offset-8">
+            <div class="p-d-flex">
+              <button type="button" (click)="getdataurl(firstlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">First</button>
+              <button type="button" (click)="getdataurl(previewlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">Previous</button>
+              <button type="button" (click)="getdataurl(nextlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">Next</button>
+              <button type="button" (click)="getdataurl(lastlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">Last</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

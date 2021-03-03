@@ -1,0 +1,266 @@
+<div class=" p-md-12 p-lg-12 p-p-4">
+  <h1 class="pageheader__title text--capital p-py-4"> Merchant. </h1>
+
+
+  <p-tabView>
+    <p-tabPanel header="List Merchant">
+      <div class="permissionbox">
+        <ng-container *ngIf="franchaise && franchaise.length">
+          <div class="p-grid">
+
+            <div class="p-col-2">
+              <div class="p-grid p-fluid">
+                <div class="p-field form__item">
+                  <label for="page_size" class="form__label text--capital"> Page Size </label>
+                  <select name="cars" id="agent_type" [(ngModel)]="page_size" (change)="reload()" class="form__select select">
+                    <option value="10"> 10 </option>
+                    <option value="200">200</option>
+                    <option value="2000">2000</option>
+                    <option value="10000">10000</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="p-col-2 p-offset-8">
+              <div class="p-field form__item">
+                <label for="search_text" class="form__label text--capital"> Search Text </label>
+                <input id="search_text" [(ngModel)]="search_text" (change)="reload()"  class="form__input form__input--lg" type="text" pInputText>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-grid card">
+            <div class="p-col">
+              <div class="table__container">
+                <table class="table table__bordered">
+                  <thead class="thead__dark">
+                    <tr>
+                      <th>S/No.</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Option</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let fran of franchaise; let i = index">
+                      <td>{{ (i+1) + from - 1 }}</td>
+                      <td> {{ fran.firstname | titlecase }} {{ fran.lastname | titlecase }}</td>
+                      <td>{{ fran.email }}</td>
+                      <td>
+                        <a routerLink="/permissions/{{ fran.id }}" role="button" class="button button--sm text--capital button--info"> view </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="p-grid">
+                  <div class="p-col-4 p-offset-8">
+                    <div class="p-d-flex">
+                      <button type="button" (click)="getdataurl(firstlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">First</button>
+                      <button type="button" (click)="getdataurl(previewlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">Previous</button>
+                      <button type="button" (click)="getdataurl(nextlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">Next</button>
+                      <button type="button" (click)="getdataurl(lastlink)" class="button button--primary button--raised button--wide text--upper p-mx-2">Last</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Create Merchant">
+      <div class="card p-p-4 permissionbox">
+        <div class="p-col-12  account__container">
+          <!-- <h3 class="p-my-4">Create Agents</h3> -->
+          <form [formGroup]="creatagent" (ngSubmit)="createfrans()">
+            <div class="p-grid p-fluid">
+              <div class="p-field p-col-6 form__item">
+                <label for="firstname1" class="form__label text--capital"> Firstname </label>
+                <input id="firstname1" formControlName="firstname" class="form__input form__input--lg" type="text" pInputText>
+                <ng-container
+                  *ngIf="(formControls.firstname.dirty || formControls.firstname.touched) && formControls.firstname.errors">
+                  <span *ngIf="formControls.firstname.errors.required" id="firstname-help"
+                    class="p-invalid p-mb-2 p-d-block p-px-2"> Firstname is required. </span>
+                  <span *ngIf="formControls.firstname.errors.minlength" id="firstname-help"
+                    class="p-invalid p-mb-2 p-d-block p-px-2">Firstname must be at least 6 characters</span>
+                </ng-container>
+              </div>
+              <div class="p-field p-col-6 form__item">
+                <label for="lastname1" class="form__label text--capital"> Lastname </label>
+                <input id="lastname1" formControlName="lastname" class="form__input form__input--lg" type="text" pInputText>
+                <ng-container
+                  *ngIf="(formControls.lastname.dirty || formControls.lastname.touched) && formControls.lastname.errors">
+                  <span *ngIf="formControls.lastname.errors.required" id="lastname-help"
+                    class="p-invalid p-mb-2 p-d-block p-px-2"> Lastname is required. </span>
+                  <span *ngIf="formControls.lastname.errors.minlength" id="lastname-help"
+                    class="p-invalid p-mb-2 p-d-block p-px-2">Lastname must be at least 6 characters</span>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="p-grid p-fluid">
+
+              <div class="p-field p-col-6 form__item">
+                <label for="email1" class="form__label text--capital"> Email </label>
+                <input id="email1" formControlName="email" class="form__input form__input--lg"  (change)="cleanMail()" type="email" pInputText>
+                <ng-container
+                  *ngIf="(formControls.email.dirty || formControls.email.touched) && formControls.email.errors">
+                  <span *ngIf="formControls.email.errors.required" id="email-help"
+                    class="p-invalid p-my-2 p-d-block">Email is required</span>
+                  <span *ngIf="formControls.email.errors.email" id="email-help"
+                    class="p-invalid p-my-2 p-d-block">Please enter valid email only</span>
+                </ng-container>
+                <ng-container *ngIf="emailerror && emailerror.length">
+                  <ul class="errors">
+                    <li *ngFor="let errorr of emailerror;">{{ errorr }}</li>
+                  </ul>
+                </ng-container>
+              </div>
+
+              <div class="p-field p-col-6 form__item">
+                <label for="country" class="form__label text--capital"> Country </label>
+                <input id="country" formControlName="country" class="form__input form__input--lg"  type="text" pInputText>
+                <ng-container
+                  *ngIf="(formControls.country.dirty || formControls.country.touched) && formControls.country.errors">
+                  <span *ngIf="formControls.country.errors.required" id="country-help"
+                    class="p-invalid p-my-2 p-d-block">country is required</span>
+                  <span *ngIf="formControls.country.errors.country" id="country-help"
+                    class="p-invalid p-my-2 p-d-block">Please enter valid country only</span>
+                </ng-container>
+                <!-- <ng-container *ngIf="countryerror && countryerror.length">
+                  <ul class="errors">
+                    <li *ngFor="let errorr of countryerror;">{{ errorr }}</li>
+                  </ul>
+                </ng-container> -->
+              </div>
+
+            </div>
+
+            <div class="p-grid p-fluid">
+              <div class="p-field p-col-6 form__item">
+                <label for="state1" class="form__label text--capital"> State </label>
+                <select id="agent_type" formControlName="state" class="form__select select">
+                  <option *ngFor="let state of states; let i = index" [attr.data-index]="i" [value]="state.name">{{ state.name }}</option>
+                </select>
+                <ng-container
+                  *ngIf="(formControls.state.dirty || formControls.state.touched) && formControls.state.errors">
+                  <span *ngIf="formControls.state.errors.required" id="state-help"
+                    class="p-invalid p-mb-2 p-d-block p-px-2"> State is required. </span>
+                  <span *ngIf="formControls.state.errors.minlength" id="state-help"
+                    class="p-invalid p-mb-2 p-d-block p-px-2">state must be at least 3 characters</span>
+                </ng-container>
+              </div>
+              <div class="p-field p-col-6 form__item">
+                <label for="city" class="form__label text--capital"> City </label>
+                <input id="city" formControlName="city" class="form__input form__input--lg"  type="text" pInputText>
+                <ng-container
+                  *ngIf="(formControls.city.dirty || formControls.city.touched) && formControls.city.errors">
+                  <span *ngIf="formControls.city.errors.required" id="city-help"
+                    class="p-invalid p-my-2 p-d-block">City is required</span>
+                  <span *ngIf="formControls.city.errors.minLength" id="city-help"
+                    class="p-invalid p-my-2 p-d-block">Please enter valid city only</span>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="p-grid p-fluid">
+              <div class="p-field p-col-6 form__item">
+                <label for="password" class="form__label text--capital">Password</label>
+                <span class="p-input-icon-right">
+                  <i (click)="hide = ! hide" class="pi" [class]="hide ? 'pi-eye' :'pi-eye-slash'" style="font-size: 1.4rem; cursor: pointer"></i>
+                  <input [type]="hide ? 'password' : 'text'" class="form__input form__input--lg" formControlName="password" />
+              </span>
+                <!-- <input type="password" formControlName="password" id="password" class="form__input form__input--lg"> -->
+                <ng-container
+                *ngIf="(formControls.password.dirty || formControls.password.touched) && formControls.password.errors">
+                  <span *ngIf="formControls.password.errors.required" id="password-help"
+                    class="p-invalid p-mb-2 p-d-block p-px-2">Please enter password</span>
+                  <span *ngIf="formControls.password.errors.minlength" id="password-help"
+                    class="p-invalid p-mb-2 p-d-block p-px-2">Password must be at least 6 characters</span>
+                </ng-container>
+              </div>
+
+              <div class="p-field p-col-6 form__item">
+                <label for="password" class="form__label text--capital">Confirm password</label>
+                  <span class="p-input-icon-right">
+                    <i (click)="comfirmhide = ! comfirmhide" class="pi" [class]="comfirmhide ? 'pi-eye' :'pi-eye-slash'" style="font-size: 1.4rem; cursor: pointer"></i>
+                      <input [type]="comfirmhide ? 'password' : 'text'" class="form__input form__input--lg" formControlName="password_confirmation" />
+                  </span>
+                  <ng-container
+                  *ngIf="(formControls.password_confirmation.dirty || formControls.password_confirmation.touched) && formControls.password_confirmation.errors">
+                    <span *ngIf="formControls.password_confirmation.errors.required" id="password-help"
+                      class="p-invalid p-mb-2 p-d-block p-px-2">Please enter password</span>
+                    <span *ngIf="formControls.password_confirmation.errors.confirm" id="password-help"
+                      class="p-invalid p-mb-2 p-d-block p-px-2">Password confirmation must match password</span>
+                  </ng-container>
+              </div>
+            </div>
+
+            <div class="p-grid p-mt-4 card">
+              <div class="p-col">
+                <div class="table__container">
+                  <table class="table table__bordered">
+                    <thead class="thead__dark">
+                      <tr>
+                        <th>Permission</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td> Activate / Deactivate Agents </td>
+                        <td><p-inputSwitch formControlName="activate"></p-inputSwitch></td>
+                      </tr>
+                      <tr>
+                        <td>Assign Permissions </td>
+                        <td><p-inputSwitch formControlName="create_permissions"></p-inputSwitch></td>
+                      </tr>
+                      <tr>
+                        <td>View Agents Permissions </td>
+                        <td><p-inputSwitch formControlName="view_agents_permissions"></p-inputSwitch></td>
+                      </tr>
+                      <tr>
+                        <td>Create Agent Permissions </td>
+                        <td><p-inputSwitch formControlName="create_agents_permissions"></p-inputSwitch></td>
+                      </tr>
+                      <tr>
+                        <td>Edit Agent Permissions </td>
+                        <td><p-inputSwitch formControlName="edit_agents_permissions"></p-inputSwitch></td>
+                      </tr>
+                      <tr>
+                        <td>View games Permissions </td>
+                        <td><p-inputSwitch formControlName="view_games"></p-inputSwitch></td>
+                      </tr>
+                      <tr>
+                        <td>View Sales </td>
+                        <td><p-inputSwitch formControlName="view_sales"></p-inputSwitch></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="p-grid  p-pt-4  p-fluid">
+              <div class="p-field  p-col-2 p-offset-10 form__item">
+                <button type="submit" [disabled]="Creating"
+                  class="button button--primary button--raised button--wide text--upper">
+                  <i *ngIf="Creating" class="pi pi-spin pi-spinner p-mr-2"></i>
+                  {{Creating ? 'Submiting..' : ' Submit'}}
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+    </p-tabPanel>
+  </p-tabView>
+
+
+
+
+</div>
+

@@ -1,0 +1,70 @@
+<div class=" p-md-12 p-lg-12 p-p-4">
+  <h1 class="pageheader__title text--capital p-py-4"> Agent sales report. </h1>
+  <div class="p-grid">
+
+    <div class="p-col-4">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-6 form__item">
+          <label for="start_date" class="form__label text--capital"> Start date </label>
+          <p-calendar for="start_date"  class="date-select" (onSelect)="loadata()" [(ngModel)]="start_date" showTime="true" hourFormat="24"></p-calendar>
+        </div>
+        <div class="p-field p-col-6 form__item">
+          <label for="end_date" class="form__label text--capital"> End date </label>
+          <p-calendar for="end_date" class="date-select" (onSelect)="loadata()" [(ngModel)]="end_date" showTime="true" hourFormat="24"></p-calendar>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="card p-md-12 p-lg-12 p-p-4">
+    <div class="p-p-2">
+      Generate sales report for a period of time.
+    </div>
+
+    <div class="table__container">
+      <table class="table table__bordered">
+        <thead class="thead__dark">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Game Sales </th>
+            <th>Bid Sales</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container  *ngIf="!agents">
+            <tr>
+              <td colspan="4">
+              <p class="p-p-4 text--center text--capital">
+                no data available .
+              </p>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="agents != null">
+
+            <!-- <tr *ngFor="let sales of sales_report; index as i;"> -->
+            <tr>
+              <td>{{ agents?.firstname |titlecase }} {{ agents?.lastname | titlecase }}</td>
+              <td>{{ agents?.email }}</td>
+              <td> {{ games_reports | currency:'₦' }}</td>
+              <td>{{ bids | currency: '₦' }}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+
+      <!-- <ng-container *ngIf="total != null">
+        <div class="p-grid">
+          <div class="p-col-4 p-offset-8">
+            <div class="p-d-flex" style="float: right;">
+              Total:  <strong>{{ this.total | currency: '₦'}}</strong>
+            </div>
+          </div>
+        </div>
+      </ng-container> -->
+
+    </div>
+  </div>
+</div>

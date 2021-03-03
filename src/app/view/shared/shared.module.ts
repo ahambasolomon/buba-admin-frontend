@@ -11,6 +11,7 @@ import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
 import { TabViewModule } from 'primeng/tabview';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import {CardModule} from 'primeng/card';
 
 
 
@@ -20,6 +21,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     CommonModule,
     ButtonModule,
     ReactiveFormsModule,
+    CardModule,
     FormsModule,
     PanelModule,
     InputTextareaModule,
@@ -35,6 +37,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     ButtonModule,
     InputNumberModule,
     PanelModule,
+    CardModule,
     InputTextareaModule,
     ReactiveFormsModule,
     TabViewModule,

@@ -1,0 +1,106 @@
+<div class=" p-md-12 p-lg-12 p-p-2">
+  <h1 class="pageheader__title text--capital p-py-4"> Agent sales report. </h1>
+  <div class="p-grid">
+
+    <div class="p-col-4">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-6 form__item">
+          <label for="start_date" class="form__label text--capital"> Start date </label>
+          <p-calendar for="start_date"  class="date-select" (onSelect)="loadata()" showTime="true" hourFormat="24" [(ngModel)]="start_date"></p-calendar>
+        </div>
+        <div class="p-field p-col-6 form__item">
+          <label for="end_date" class="form__label text--capital"> End date </label>
+          <p-calendar for="end_date"  class="date-select" (onSelect)="loadata()" showTime="true" hourFormat="24" [(ngModel)]="end_date"></p-calendar>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="p-col-4 p-offset-4">
+      <div>
+        <div class="p-field p-col-3 p-offset-9 form__item">
+          <label for="page_size" class="form__label text--capital"> Page Size </label>
+          <select name="cars" id="agent_type" (change)="loadata()" [(ngModel)]="page_size"  class="form__select select">
+            <option value="10"> 10 </option>
+            <option value="200">200</option>
+            <option value="2000">2000</option>
+            <option value="10000">10000</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="card p-md-12 p-lg-12 p-p-4">
+    <div class="p-p-2">
+      Generate sales report for a period of time.
+    </div>
+
+    <div class="table__container">
+      <table class="table table__bordered">
+        <thead class="thead__dark">
+          <tr>
+            <th scope="col">S/No</th>
+            <!-- <th>Action</th> -->
+            <th>Name</th>
+            <th (click)="sort_games()" style="cursor: default;">
+              Game Sales
+              <i class="pi pi-arrow-down" [ngClass]="{'rotated':sort_game == true}" style="font-size: 0.9rem"></i>
+            </th>
+            <th (click)="sort_bids()">
+              Bid Sales
+              <i class="pi pi-arrow-down" [ngClass]="{'rotated':sort_bid == true}" style="font-size: 0.9rem"></i>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="!sales_report">
+            <tr>
+              <td colspan="7">
+              <p class="p-p-4 text--center text--capital">
+                no data available.
+                </p>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="sales_report && sales_report.length">
+
+            <tr *ngFor="let sales of sales_report; index as i;">
+              <td>{{ i + 1 }}</td>
+              <!-- <td> <a class="button button--sm button--info text--upper p-mx-2"> View </a> </td> -->
+              <td> {{ sales.firstname | titlecase }} {{ sales.lastname | titlecase}} </td>
+              <!-- <td>{{ sales.email }}</td> -->
+              <td>{{sales.game_amount | currency:'₦'}}</td>
+              <!-- <td> {{ sales.authId }}</td> -->
+              <td> {{ sales.bid_amount | currency: '₦' }}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+
+      <!-- <div class="p-grid">
+        <div class="p-col-4">
+          <div style="float: right;">
+             <strong>Bid Total: </strong>
+            <strong> Game Total:  </strong><br>
+            <strong>Total: </strong><br>
+          </div>
+        </div>
+      </div> -->
+
+      <ng-container *ngIf="total != null">
+        <div class="p-grid">
+          <div class="p-col-4  p-offset-8">
+            <div style="float: right;">
+              <strong>Bid Total: {{ this.totalbid_sales | currency: '₦'}}</strong><br>
+              <strong> Game Total: {{ this.totalgame_sales | currency: '₦'}} </strong><br>
+              <strong>Total: {{ this.total | currency: '₦'}}</strong><br>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+
+    </div>
+  </div>
+</div>

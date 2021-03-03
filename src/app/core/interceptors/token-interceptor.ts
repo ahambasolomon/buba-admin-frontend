@@ -20,15 +20,15 @@ export class TokenInterceptor implements HttpInterceptor {
             req = req.clone({
                 setHeaders: {
                     'Content-Type': 'application/json',
-                    Authorization: token
+                    Authorization: `Bearer ${token}`
                 }
             });
         }
         return next.handle(req).pipe(catchError(error => {
             if (error instanceof HttpErrorResponse && error.status === 401) {
-                // this.toastr.error(error.error.message, 'Unauthorised!');
-                // this.router.navigate(['/login']);
-                // this.service.clearSessionStorage().then(() => this.service.storeUser(null));
+                this.toastr.error(error.error.message, 'Unauthorised!');
+                this.router.navigate(['/login']);
+                this.service.clearSessionStorage().then(() => this.service.storeUser(null));
                 return throwError(error);
             } else {
                 return throwError(error);

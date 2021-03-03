@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   bubaApi: 'https://api.buba.ng/public',
+  bubafranchaiseApi: 'https://agent-api.buba.ng/api',
   module: 'admin'
 };
 

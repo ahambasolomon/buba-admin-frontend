@@ -1,0 +1,175 @@
+<div class="card p-md-9 p-mx-auto p-lg-9 p-p-4">
+  <div class="p-col-12  account__container">
+    <h3 class="p-my-4">Create Agents</h3>
+    <form [formGroup]="creatagent" (ngSubmit)="createAgent()">
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-6 form__item">
+          <label for="firstname1" class="form__label text--capital"> Firstname </label>
+          <input id="firstname1" formControlName="firstname" class="form__input form__input--lg" type="text" pInputText>
+          <ng-container
+            *ngIf="(formControls.firstname.dirty || formControls.firstname.touched) && formControls.firstname.errors">
+            <span *ngIf="formControls.firstname.errors.required" id="firstname-help"
+              class="p-invalid p-mb-2 p-d-block p-px-2"> Firstname is required. </span>
+            <span *ngIf="formControls.firstname.errors.minlength" id="firstname-help"
+              class="p-invalid p-mb-2 p-d-block p-px-2">Firstname must be at least 6 characters</span>
+          </ng-container>
+        </div>
+        <div class="p-field p-col-6 form__item">
+          <label for="lastname1" class="form__label text--capital"> Lastname </label>
+          <input id="lastname1" formControlName="lastname" class="form__input form__input--lg" type="text" pInputText>
+          <ng-container
+            *ngIf="(formControls.lastname.dirty || formControls.lastname.touched) && formControls.lastname.errors">
+            <span *ngIf="formControls.lastname.errors.required" id="lastname-help"
+              class="p-invalid p-mb-2 p-d-block p-px-2"> Lastname is required. </span>
+            <span *ngIf="formControls.lastname.errors.minlength" id="lastname-help"
+              class="p-invalid p-mb-2 p-d-block p-px-2">Lastname must be at least 6 characters</span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="p-grid p-fluid">
+
+        <div class="p-field p-col-6 form__item">
+          <label for="email1" class="form__label text--capital"> Email </label>
+          <input id="email1" formControlName="email" class="form__input form__input--lg"  (change)="cleanMail()" type="email" pInputText>
+          <ng-container
+            *ngIf="(formControls.email.dirty || formControls.email.touched) && formControls.email.errors">
+            <span *ngIf="formControls.email.errors.required" id="email-help"
+              class="p-invalid p-my-2 p-d-block">Email is required</span>
+            <span *ngIf="formControls.email.errors.email" id="email-help"
+              class="p-invalid p-my-2 p-d-block">Please enter valid email only</span>
+          </ng-container>
+          <ng-container *ngIf="emailerror && emailerror.length">
+            <ul class="errors">
+              <li *ngFor="let errorr of emailerror;">{{ errorr }}</li>
+            </ul>
+          </ng-container>
+        </div>
+
+        <div class="p-field p-col-6 form__item">
+          <label for="phone1" class="form__label text--capital"> Phone Number </label>
+          <input id="phone1" formControlName="phone_number" class="form__input form__input--lg" (change)="cleanPhone()" type="tel" pInputText>
+          <ng-container
+            *ngIf="(formControls.phone_number.dirty || formControls.phone_number.touched) && formControls.phone_number.errors">
+            <span *ngIf="formControls.phone_number.errors.required" id="phone_number-help"
+              class="p-invalid p-my-2 p-d-block">Phone number is required</span>
+            <span *ngIf="formControls.phone_number.errors.pattern" id="phone_number-help"
+              class="p-invalid p-my-2 p-d-block">Please enter valid Phone number only</span>
+          </ng-container>
+          <ng-container *ngIf="phonerror && phonerror.length">
+            <ul class="errors">
+              <li *ngFor="let errorr of phonerror;">{{ errorr }}</li>
+            </ul>
+          </ng-container>
+        </div>
+
+      </div>
+
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-6 form__item">
+          <label for="state1" class="form__label text--capital"> State </label>
+          <select id="agent_type" formControlName="state" class="form__select select">
+            <option *ngFor="let state of states; let i = index" [attr.data-index]="i" [value]="state.name">{{ state.name }}</option>
+          </select>
+          <ng-container
+            *ngIf="(formControls.state.dirty || formControls.state.touched) && formControls.state.errors">
+            <span *ngIf="formControls.state.errors.required" id="state-help"
+              class="p-invalid p-mb-2 p-d-block p-px-2"> State is required. </span>
+            <span *ngIf="formControls.state.errors.minlength" id="state-help"
+              class="p-invalid p-mb-2 p-d-block p-px-2">state must be at least 3 characters</span>
+          </ng-container>
+        </div>
+        <div class="p-field p-col-6 form__item">
+          <label for="city1" class="form__label text--capital"> City </label>
+          <input id="city1" formControlName="city" class="form__input form__input--lg" type="text" pInputText>
+          <ng-container
+            *ngIf="(formControls.city.dirty || formControls.city.touched) && formControls.city.errors">
+            <span *ngIf="formControls.city.errors.required" id="city-help"
+              class="p-invalid p-mb-2 p-d-block p-px-2"> City is required. </span>
+            <span *ngIf="formControls.city.errors.minlength" id="city-help"
+              class="p-invalid p-mb-2 p-d-block p-px-2">City must be at least 3 characters</span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="p-grid p-fluid">
+
+        <div class="p-field p-col-6 form__item">
+          <label for="address1" class="form__label text--capital"> Address </label>
+          <input id="address1" formControlName="address" class="form__input form__input--lg" (change)="cleanPhone()" type="tel" pInputText>
+          <ng-container
+            *ngIf="(formControls.address.dirty || formControls.address.touched) && formControls.address.errors">
+            <span *ngIf="formControls.address.errors.required" id="address-help"
+              class="p-invalid p-my-2 p-d-block">Address is required</span>
+              <span *ngIf="formControls.address.errors.minlength" id="firstname-help"
+              class="p-invalid p-mb-2 p-d-block p-px-2">Address must be at least 15 characters</span>
+          </ng-container>
+          <ng-container *ngIf="phonerror && phonerror.length">
+            <ul class="errors">
+              <li *ngFor="let errorr of phonerror;">{{ errorr }}</li>
+            </ul>
+          </ng-container>
+        </div>
+
+        <div class="p-field p-col-6 form__item">
+          <label for="agent_type" class="form__label text--capital"> Agent Type </label>
+          <!-- <p-dropdown [options]="agentype" class="create-h"  formControlName="agent_type" placeholder="Select a Agent Type"  [showClear]="true"></p-dropdown> -->
+          <select name="cars" id="agent_type" formControlName="agent_type" class="form__select select">
+            <!-- <option [value]=null> Select Agent Type </option> -->
+            <option value="A">Dependent Agent</option>
+            <option value="B">Independent Agent</option>
+          </select>
+          <ng-container
+            *ngIf="(formControls.agent_type.dirty || formControls.agent_type.touched) && formControls.agent_type.errors">
+            <span *ngIf="formControls.agent_type.errors.required" id="agent_type-help"
+              class="p-invalid p-my-2 p-d-block">Agent type is required</span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-6 form__item">
+          <label for="password" class="form__label text--capital">Password</label>
+          <span class="p-input-icon-right">
+            <i (click)="hide = ! hide" class="pi" [class]="hide ? 'pi-eye' :'pi-eye-slash'" style="font-size: 1.4rem; cursor: pointer"></i>
+            <input [type]="hide ? 'password' : 'text'" class="form__input form__input--lg" formControlName="password" />
+        </span>
+          <!-- <input type="password" formControlName="password" id="password" class="form__input form__input--lg"> -->
+          <ng-container
+          *ngIf="(formControls.password.dirty || formControls.password.touched) && formControls.password.errors">
+            <span *ngIf="formControls.password.errors.required" id="password-help"
+              class="p-invalid p-mb-2 p-d-block p-px-2">Please enter password</span>
+            <span *ngIf="formControls.password.errors.minlength" id="password-help"
+              class="p-invalid p-mb-2 p-d-block p-px-2">Password must be at least 6 characters</span>
+          </ng-container>
+        </div>
+
+        <div class="p-field p-col-6 form__item">
+          <label for="password" class="form__label text--capital">Confirm password</label>
+            <span class="p-input-icon-right">
+              <i (click)="comfirmhide = ! comfirmhide" class="pi" [class]="comfirmhide ? 'pi-eye' :'pi-eye-slash'" style="font-size: 1.4rem; cursor: pointer"></i>
+                <input [type]="comfirmhide ? 'password' : 'text'" class="form__input form__input--lg" formControlName="password_confirmation" />
+            </span>
+            <ng-container
+            *ngIf="(formControls.password_confirmation.dirty || formControls.password_confirmation.touched) && formControls.password_confirmation.errors">
+              <span *ngIf="formControls.password_confirmation.errors.required" id="password-help"
+                class="p-invalid p-mb-2 p-d-block p-px-2">Please enter password</span>
+              <span *ngIf="formControls.password_confirmation.errors.confirm" id="password-help"
+                class="p-invalid p-mb-2 p-d-block p-px-2">Password confirmation must match password</span>
+            </ng-container>
+        </div>
+      </div>
+
+      <div class="p-grid p-fluid">
+        <div class="p-field p-col-12 form__item">
+          <button type="submit" [disabled]="Creating"
+            class="button button--primary button--raised button--wide text--upper">
+            <i *ngIf="Creating" class="pi pi-spin pi-spinner p-mr-2"></i>
+            {{Creating ? 'Submiting..' : ' Submit'}}
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

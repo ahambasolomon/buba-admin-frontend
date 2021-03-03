@@ -1,0 +1,161 @@
+<div class="">
+  <h1 class="pageheader__title text--capital p-py-4"> Edit Merchant. </h1>
+  <ng-container *ngIf="franchaisedata">
+    <div class="card p-col-12 p-p-4 permissionbox account__container">
+
+      <form [formGroup]="creatagent" (ngSubmit)="createfrans()">
+        <div class="p-grid  p-pt-4  p-fluid">
+          <div class="p-field  p-col-2 p-offset-10 form__item">
+            <button type="submit" [disabled]="Creating"
+              class="button button--primary button--raised button--wide text--upper">
+              <i *ngIf="Creating" class="pi pi-spin pi-spinner p-mr-2"></i>
+              {{Creating ? 'Saving..' : ' Save'}}
+            </button>
+          </div>
+        </div>
+        <div class="p-grid p-fluid">
+          <div class="p-field p-col-6 form__item">
+            <label for="firstname1" class="form__label text--capital"> Firstname </label>
+            <input id="firstname1" formControlName="firstname" class="form__input form__input--lg" type="text" pInputText>
+            <ng-container
+              *ngIf="(formControls.firstname.dirty || formControls.firstname.touched) && formControls.firstname.errors">
+              <span *ngIf="formControls.firstname.errors.required" id="firstname-help"
+                class="p-invalid p-mb-2 p-d-block p-px-2"> Firstname is required. </span>
+              <span *ngIf="formControls.firstname.errors.minlength" id="firstname-help"
+                class="p-invalid p-mb-2 p-d-block p-px-2">Firstname must be at least 6 characters</span>
+            </ng-container>
+          </div>
+          <div class="p-field p-col-6 form__item">
+            <label for="lastname1" class="form__label text--capital"> Lastname </label>
+            <input id="lastname1" formControlName="lastname" class="form__input form__input--lg" type="text" pInputText>
+            <ng-container
+              *ngIf="(formControls.lastname.dirty || formControls.lastname.touched) && formControls.lastname.errors">
+              <span *ngIf="formControls.lastname.errors.required" id="lastname-help"
+                class="p-invalid p-mb-2 p-d-block p-px-2"> Lastname is required. </span>
+              <span *ngIf="formControls.lastname.errors.minlength" id="lastname-help"
+                class="p-invalid p-mb-2 p-d-block p-px-2">Lastname must be at least 6 characters</span>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="p-grid p-fluid">
+
+          <div class="p-field p-col-6 form__item">
+            <label for="email1" class="form__label text--capital"> Email </label>
+            <input id="email1" formControlName="email" class="form__input form__input--lg"  (change)="cleanMail()" type="email" pInputText>
+            <ng-container
+              *ngIf="(formControls.email.dirty || formControls.email.touched) && formControls.email.errors">
+              <span *ngIf="formControls.email.errors.required" id="email-help"
+                class="p-invalid p-my-2 p-d-block">Email is required</span>
+              <span *ngIf="formControls.email.errors.email" id="email-help"
+                class="p-invalid p-my-2 p-d-block">Please enter valid email only</span>
+            </ng-container>
+            <ng-container *ngIf="emailerror && emailerror.length">
+              <ul class="errors">
+                <li *ngFor="let errorr of emailerror;">{{ errorr }}</li>
+              </ul>
+            </ng-container>
+          </div>
+
+          <div class="p-field p-col-6 form__item">
+            <label for="country" class="form__label text--capital"> Country </label>
+            <input id="country" formControlName="country" class="form__input form__input--lg"  type="text" pInputText>
+            <ng-container
+              *ngIf="(formControls.country.dirty || formControls.country.touched) && formControls.country.errors">
+              <span *ngIf="formControls.country.errors.required" id="country-help"
+                class="p-invalid p-my-2 p-d-block">country is required</span>
+              <span *ngIf="formControls.country.errors.country" id="country-help"
+                class="p-invalid p-my-2 p-d-block">Please enter valid country only</span>
+            </ng-container>
+            <!-- <ng-container *ngIf="countryerror && countryerror.length">
+              <ul class="errors">
+                <li *ngFor="let errorr of countryerror;">{{ errorr }}</li>
+              </ul>
+            </ng-container> -->
+          </div>
+
+        </div>
+
+        <div class="p-grid p-fluid">
+          <div class="p-field p-col-6 form__item">
+            <label for="state1" class="form__label text--capital"> State </label>
+            <select id="agent_type" formControlName="state" class="form__select select">
+              <option *ngFor="let state of states; let i = index" [attr.data-index]="i" [value]="state.name">{{ state.name }}</option>
+            </select>
+            <ng-container
+              *ngIf="(formControls.state.dirty || formControls.state.touched) && formControls.state.errors">
+              <span *ngIf="formControls.state.errors.required" id="state-help"
+                class="p-invalid p-mb-2 p-d-block p-px-2"> State is required. </span>
+              <span *ngIf="formControls.state.errors.minlength" id="state-help"
+                class="p-invalid p-mb-2 p-d-block p-px-2">state must be at least 3 characters</span>
+            </ng-container>
+          </div>
+          <div class="p-field p-col-6 form__item">
+            <label for="city" class="form__label text--capital"> City </label>
+            <input id="city" formControlName="city" class="form__input form__input--lg"  type="text" pInputText>
+            <ng-container
+              *ngIf="(formControls.city.dirty || formControls.city.touched) && formControls.city.errors">
+              <span *ngIf="formControls.city.errors.required" id="city-help"
+                class="p-invalid p-my-2 p-d-block">City is required</span>
+              <span *ngIf="formControls.city.errors.minLength" id="city-help"
+                class="p-invalid p-my-2 p-d-block">Please enter valid city only</span>
+            </ng-container>
+          </div>
+        </div>
+
+
+
+      </form>
+
+      <div class="p-grid p-mt-4 card">
+        <div class="p-col">
+          <div class="table__container">
+            <table class="table table__bordered">
+              <thead class="thead__dark">
+                <tr>
+                  <th>Permission</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Assign Permissions </td>
+                  <td><p-inputSwitch [(ngModel)]="create_permissions"></p-inputSwitch></td>
+                </tr>
+                <tr>
+                  <td> Activate / Deactivate Agents </td>
+                  <td><p-inputSwitch [(ngModel)]="activate"></p-inputSwitch></td>
+                </tr>
+                <tr>
+                  <td>View Agents Permissions </td>
+                  <td><p-inputSwitch [(ngModel)]="view_agents_permissions"></p-inputSwitch></td>
+                </tr>
+                <tr>
+                  <td>Create Agents Permissions </td>
+                  <td><p-inputSwitch [(ngModel)]="create_agents_permissions"></p-inputSwitch></td>
+                </tr>
+                <tr>
+                  <td>Edit Agents Permissions </td>
+                  <td><p-inputSwitch [(ngModel)]="edit_agents_permissions"></p-inputSwitch></td>
+                </tr>
+                <tr>
+                  <td>View Game Permissions </td>
+                  <td><p-inputSwitch [(ngModel)]="view_game"></p-inputSwitch></td>
+                </tr>
+                <tr>
+                  <td>View Sales </td>
+                  <td><p-inputSwitch [(ngModel)]="view_sales"></p-inputSwitch></td>
+                </tr>
+                <!-- view_game -->
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+</ng-container>
+</div>
+
+

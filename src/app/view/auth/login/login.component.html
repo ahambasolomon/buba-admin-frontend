@@ -4,8 +4,7 @@
         <a href="" class="account__head__logo">
           <img src="assets/img/buba-secondary.png" alt="buba">
         </a>
-        <h1 class="account__head__subtitle">admin</h1>
-        <h1 class="account__head__title">Log in to your account</h1>
+        <!-- <h1 class="account__head__title">Agent and Sales Management System</h1> -->
       </div>
       <div class="account__body">
         <div class="account__form">
@@ -18,7 +17,12 @@
                     class="p-invalid p-my-2 p-d-block p-text-center text--semi-small">
                     {{loginForm.errors.unAuthorized}}
                   </span>
-                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="emailerror && emailerror.length">
+                <ul class="errors">
+                  <li *ngFor="let errorr of emailerror;">{{ errorr }}</li>
+                </ul>
+              </ng-container>
             <div class="p-fluid">
               <div class="p-field form__item">
                 <label for="email" class="form__label text--capital">email</label>
@@ -43,7 +47,7 @@
                 <span *ngIf="formControls.password.errors.required" id="password-help"
                   class="p-invalid p-mb-2 p-d-block p-px-2">Please enter password</span>
                 <span *ngIf="formControls.password.errors.minlength" id="password-help"
-                  class="p-invalid p-mb-2 p-d-block p-px-2">Password must be at least characters</span>
+                  class="p-invalid p-mb-2 p-d-block p-px-2">Password must be at least 6 characters</span>
               </ng-container>
               </div>
               <!-- <div class="p-field form__item text--right">
@@ -66,4 +70,3 @@
       </div>
     </div>
   </div>
-  

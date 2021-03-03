@@ -37,6 +37,8 @@ const routes: Routes = [
         path: 'withdrawals',
         loadChildren: () => import('../withdrawals/all-withdrawals/all-withdrawals.module').then(m => m.AllWithdrawalsModule)
       },
+
+
       {
         path: 'bids/upload',
         loadChildren: () => import('../bids/bid-upload/bid-upload.module').then(m => m.BidUploadModule)
@@ -52,6 +54,31 @@ const routes: Routes = [
       {
         path: 'bids/view/:id',
         loadChildren: () => import('../bids/one-bid/one-bid.module').then(m => m.OneBidModule)
+      },
+
+      {
+        path: 'agent',
+        loadChildren: () => import('../admin/agents/agents.module').then(m => m.AgentsModule)
+      },
+      {
+        path: 'viewagent',
+        loadChildren: () => import('../admin/viewagent/viewagent.module').then(m => m.ViewagentModule)
+      },
+      {
+        path: 'bid/history',
+        loadChildren: () => import('../admin/bid-history/bid-history.module').then(m => m.BidHistoryModule)
+      },
+      {
+        path: 'game/history',
+        loadChildren: () => import('../admin/game-history/game-history.module').then(m => m.GameHistoryModule)
+      },
+      {
+        path: 'permissions',
+        loadChildren: () => import('../admin/agent-permissions/agent-permissions.module').then(m => m.AgentPermissionsModule)
+      },
+      {
+        path: 'sales',
+        loadChildren: () => import('../admin/sales/sales.module').then(m => m.SalesModule)
       },
       {
         path: 'system-users',
@@ -81,7 +108,8 @@ const routes: Routes = [
         loadChildren: () => import('../zero-funding/zero-funding.module').then(m => m.ZeroFundingModule)
       }
     ]
-  }
+  },
+  { path: 'customers', loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule) }
 ];
 
 @NgModule({
